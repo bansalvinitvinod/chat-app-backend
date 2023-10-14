@@ -5,3 +5,5 @@ yarn-error.log
 
 # Environment Files
 .env
+
+package-lock.json

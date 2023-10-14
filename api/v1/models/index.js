@@ -5,8 +5,8 @@ const User = require("./users");
 const Chat = require("./chats");
 const Message = require("./messages");
 
-Capability.belongsToMany(Role, { through: 'Capability', timestamps: false });
-Role.belongsToMany(Capability, { through: 'Capability', timestamps: false });
+Capability.belongsToMany(Role, { through: 'Permissions', timestamps: false });
+Role.belongsToMany(Capability, { through: 'Permissions', timestamps: false });
 
 Role.hasMany(User, {
     onDelete: 'RESTRICT'
@@ -21,8 +21,8 @@ User.hasMany(Message);
 Message.belongsTo(Chat);
 Message.belongsTo(User);
 
-sequelize.sync({ force: true }).then(() => {
-    console.log('Tables created successfully!');
+sequelize.sync({ force: false }).then(() => {
+    console.log('Database synchronised successfully!');
 }).catch((error) => {
     console.error('Unable to create table : ', error);
 });

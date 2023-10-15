@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const { User, Role, Capability } = require("../models");
 const { Op } = require("sequelize");
-const transport = require('../../../config/nodemailer');
+const transporter = require('../../../config/nodemailer');
 
 exports.signup = async (req, res) => {
 
@@ -151,8 +151,8 @@ exports.forgotPassword = async (req, res) => {
                     id: user.id,
                 }
             }
-        ).then(([rowsUpdated, [updatedUser]]) => {
-            if (rowsUpdated > 0) {
+        ).then((result) => {
+            if (result.length > 0 && result[0] > 0) {
                 console.log('User updated successfully.');
                 const mailOptions = {
                     from: 'your-email@gmail.com',
@@ -182,7 +182,7 @@ exports.forgotPassword = async (req, res) => {
                     </html>
                     `,
                 };
-                transporter.sendMail(mailOptions, (error, info) => {
+                transporter.sendMail(mailOptions, (err, info) => {
                     if (err) {
                         res.status(500).send({
                             message: err
@@ -202,7 +202,7 @@ exports.forgotPassword = async (req, res) => {
                 });
             }
         }).catch((err) => {
-            console.error('Error updating user:', error);
+            console.error('Error updating user:', err);
             res.status(500).send({
                 message: err
             });

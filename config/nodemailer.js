@@ -4,8 +4,8 @@ var transport = nodemailer.createTransport({
     host: process.env.MAILHOST,
     port: process.env.MAILPORT,
     auth: {
-        user: process.env.MAILPORT,
-        pass: process.env.MAILPORT
+        user: process.env.MAILUSER,
+        pass: process.env.MAILPASSWORD
     }
 });
 
